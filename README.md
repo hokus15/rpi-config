@@ -9,7 +9,7 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 - Configure locales
 - Configure time zone
 - Change the password from current user (usually pi). You will be promted for new password.
-- Set WiFI country
+- Set WiFi country
 - Configure static IP address
 - Disable IPv6
 
@@ -38,9 +38,10 @@ You need to adapt the `rpi-config.conf` file to your needs and run the script.
 
 If configuration in `rpi-config.conf` suit your needs you can skip steps from 3 to 7 and execute directly:
 ```
-wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.conf && wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.sh && bash rpi.config.sh | tee $(date +%Y%m%d%H%M%S)-rpi-config.log`
+wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.conf && wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.sh && bash rpi.config.sh | tee $(date +%Y%m%d%H%M%S)-rpi-config.log
 ```
 
 ## Disclaimer
 I'm not responsible for bricked devices, dead SD cards, or any other things script may break. You are using this at your own responsibility...
+
 Feel free to modify the script and config file at your convenience.
