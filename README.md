@@ -38,7 +38,7 @@ You need to adapt the `rpi-config.conf` file to your needs and run the script.
 
 If configuration in `rpi-config.conf` suit your needs you can skip steps from 3 to 7 and execute directly:
 ```
-wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.conf && wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.sh && bash rpi.config.sh | tee $(date +%Y%m%d%H%M%S)-rpi-config.log
+wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.conf && wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.sh && bash rpi-config.sh | tee $(date +%Y%m%d%H%M%S)-rpi-config.log
 ```
 
 ## Disclaimer
