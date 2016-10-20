@@ -17,8 +17,11 @@ echo "===================================================================="
 echo " Automatic configuration for raspberry pi"
 echo "===================================================================="
 echo " Following configurations will be applied:   "
-if [ ! -z ${runlevel} ]; then
-    echo "     Run level will be set to ${runlevel}"
+if [ ! -z ${custom_hostname} ]; then
+    echo "     Hostname will be set to ${custom_hostname}"
+fi
+if [ ! -z ${boot_behaviour} ]; then
+    echo "     Boot behaviour will be set to ${boot_behaviour}"
 fi
 if [ ! -z ${locales} ]; then
     echo "     ${locales} locales will be configured"
@@ -68,13 +71,20 @@ else
 fi
 
 ######################
-# Configure run level
-# http://www.dynacont.net/documentation/linux/Useful_SystemD_commands/
+# Configure hostname
 ######################
-if [ ! -z ${runlevel} ]; then
-    echo "$(date +%Y-%m-%d:%H:%M:%S) Configure run level to ${runlevel}"
-    sudo rm -f /etc/systemd/system/default.target
-    sudo ln -sf /lib/systemd/system/$runlevel /etc/systemd/system/default.target
+if [ ! -z ${custom_hostname} ]; then
+    mkdir -p $backup/etc
+    sudo cp /etc/hostname /etc/hosts $backup/etc/
+    echo "$(date +%Y-%m-%d:%H:%M:%S) Set hostname to ${custom_hostname}"
+    sudo raspi-config nonint do_hostname ${custom_hostname}
+fi
+######################
+# Configure boot behaviour
+######################
+if [ ! -z ${boot_behaviour} ]; then
+    echo "$(date +%Y-%m-%d:%H:%M:%S) Change boot behaviour to ${boot_behaviour}"
+    sudo raspi-config nonint do_boot_behaviour ${boot_behaviour}
 fi
 
 ######################
@@ -141,13 +151,13 @@ if [ ! -z ${network_disable_ipv6} ] && [ $network_disable_ipv6 = "yes" ]; then
 fi
 
 ######################
-# Set WiFi country
+# Configure WiFi
 ######################
 if [ ! -z ${wifi_country} ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Set WiFi country to ${wifi_country}"
     mkdir -p $backup/etc/wpa_supplicant
     sudo cp /etc/wpa_supplicant/wpa_supplicant.conf $backup/etc/wpa_supplicant
-    sudo sed -i -- "s/^country=.*/country=$wifi_country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+    sudo sed -i "s/^country=.*/country=$wifi_country/g" /etc/wpa_supplicant/wpa_supplicant.conf
 fi
 
 ######################
@@ -155,7 +165,7 @@ fi
 ######################
 if [ ! -z ${password_change} ] && [ $password_change = "yes" ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Change ${whoami} user password"
-    passwd
+    passwd ${whoami}
 fi
 
 ######################
