@@ -5,7 +5,7 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 
 ## Currently supported configurations:
 - Expand file system
-- Set run level
+- Configure boot behaviour
 - Configure locales
 - Configure time zone
 - Change the password from current user (usually pi). You will be promted for new password.
