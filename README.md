@@ -34,7 +34,7 @@ You need to adapt the `rpi-config.conf` file to your needs and run the script.
 4. Execute `nano rpi-config.conf`
 5. Make modifications to adapt configuration to your needs
 6. Hit `control-x`, then press `Y`
-7. Execute `wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.sh && bash rpi.config.sh | tee $(date +%Y%m%d%H%M%S)-rpi-config.log`
+7. Execute `wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.sh && bash rpi-config.sh | tee $(date +%Y%m%d%H%M%S)-rpi-config.log`
 
 If configuration in `rpi-config.conf` suit your needs you can skip steps from 3 to 7 and execute directly:
 ```

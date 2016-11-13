@@ -36,7 +36,7 @@ if [ ! -z ${network_ip} ] && [ ! -z ${network_netmask} ] && [ ! -z ${network_gat
     echo "         Gateway: ${network_gateway}"
     echo "         DNS name servers: ${network_dns_nameservers}"
     echo ""
-    echo "     Next time you want to connecto to your Raspberry use following IP: ${network_ip}"
+    echo "     Next time you want to connect to your Raspberry use following IP: ${network_ip}"
     echo ""
 fi
 if [ ! -z ${wifi_country} ]; then
@@ -166,6 +166,7 @@ fi
 if [ ! -z ${password_change} ] && [ $password_change = "yes" ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Change ${whoami} user password"
     passwd ${whoami}
+    #sudo usermod --password $(echo $1 | openssl passwd -1 -stdin) ${whoami}
 fi
 
 ######################
