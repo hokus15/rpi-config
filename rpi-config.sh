@@ -71,15 +71,6 @@ else
 fi
 
 ######################
-# Configure hostname
-######################
-if [ ! -z ${custom_hostname} ]; then
-    mkdir -p $backup/etc
-    sudo cp /etc/hostname /etc/hosts $backup/etc/
-    echo "$(date +%Y-%m-%d:%H:%M:%S) Set hostname to ${custom_hostname}"
-    sudo raspi-config nonint do_hostname ${custom_hostname}
-fi
-######################
 # Configure boot behaviour
 ######################
 if [ ! -z ${boot_behaviour} ]; then
@@ -175,6 +166,16 @@ fi
 if [ ! -z ${expand_filesystem} ] && [ $expand_filesystem = "yes" ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Expand filesystem"
     sudo raspi-config --expand-rootfs
+fi
+
+######################
+# Configure hostname
+######################
+if [ ! -z ${custom_hostname} ]; then
+    mkdir -p $backup/etc
+    sudo cp /etc/hostname /etc/hosts $backup/etc/
+    echo "$(date +%Y-%m-%d:%H:%M:%S) Set hostname to ${custom_hostname}"
+    sudo raspi-config nonint do_hostname ${custom_hostname}
 fi
 
 ######################
