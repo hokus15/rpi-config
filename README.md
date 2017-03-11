@@ -22,7 +22,7 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 2. Extract zip file containing disk image
 3. Download and install [Win32DiskImager] (https://sourceforge.net/projects/win32diskimager/)
 4. Copy image file to SD card using Win32DiskImager
-5. Since Nov 2016 SSH is disabled by default; it can be enabled by creating a file with name "ssh" in boot partition
+5. **IMPORTANT!!! Since Nov 2016 SSH is disabled by default; it can be enabled by creating a file with name "ssh" in boot partition**
 6. Plug SD card into Pi, power up 
 
 ## Use the script
