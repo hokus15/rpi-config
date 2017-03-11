@@ -29,14 +29,24 @@ fi
 if [ ! -z ${timezone} ]; then
     echo "     TimeZone will be set to ${timezone}"
 fi
-if [ ! -z ${network_ip} ] && [ ! -z ${network_netmask} ] && [ ! -z ${network_gateway} ] && [ ! -z ${network_dns_nameservers} ]; then
-    echo "     Configure static IP address:"
-    echo "         IP: ${network_ip}"
-    echo "         Net mask: ${network_netmask}"
-    echo "         Gateway: ${network_gateway}"
-    echo "         DNS name servers: ${network_dns_nameservers}"
+if [ ! -z ${interfaces_network_ip} ] && [ ! -z ${interfaces_network_netmask} ] && [ ! -z ${interfaces_network_gateway} ] && [ ! -z ${interfaces_network_dns_nameservers} ]; then
+    echo "     Configure static IP address changing /etc/network/interfaces:"
+    echo "         IP: ${interfaces_network_ip}"
+    echo "         Net mask: ${interfaces_network_netmask}"
+    echo "         Gateway: ${interfaces_network_gateway}"
+    echo "         DNS name servers: ${interfaces_network_dns_nameservers}"
     echo ""
-    echo "     Next time you want to connect to your Raspberry use following IP: ${network_ip}"
+    echo "     Next time you want to connect to your Raspberry use following IP: ${interfaces_network_ip}"
+    echo ""
+fi
+if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_netmask} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
+    echo "     Configure static IP address changing /etc/network/interfaces:"
+    echo "         IP: ${dhcpcd_network_ip}"
+    echo "         Net mask: ${dhcpcd_network_netmask}"
+    echo "         Gateway: ${dhcpcd_network_gateway}"
+    echo "         DNS name servers: ${dhcpcd_network_dns_nameservers}"
+    echo ""
+    echo "     Next time you want to connect to your Raspberry use following IP: ${dhcpcd_network_ip}"
     echo ""
 fi
 if [ ! -z ${wifi_country} ]; then
@@ -111,22 +121,33 @@ fi
 ######################
 # Configure static IP
 ######################
-if [ ! -z ${network_ip} ] && [ ! -z ${network_netmask} ] && [ ! -z ${network_gateway} ] && [ ! -z ${network_dns_nameservers} ]; then
+if [ ! -z ${interfaces_network_ip} ] && [ ! -z ${interfaces_network_netmask} ] && [ ! -z ${interfaces_network_gateway} ] && [ ! -z ${interfaces_network_dns_nameservers} ]; then
     mkdir -p $backup/etc/network
     sudo cp /etc/network/interfaces $backup/etc/network
     echo "$(date +%Y-%m-%d:%H:%M:%S) Configure static IP"
-    echo "$(date +%Y-%m-%d:%H:%M:%S)     IP: ${network_ip}"
-    #echo "$(date +%Y-%m-%d:%H:%M:%S)     Net mask: ${network_netmask}"
-    echo "$(date +%Y-%m-%d:%H:%M:%S)     Gateway: ${network_gateway}"
-    echo "$(date +%Y-%m-%d:%H:%M:%S)     DNS name servers: ${network_dns_nameservers}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     IP: ${interfaces_network_ip}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     Net mask: ${interfaces_network_netmask}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     Gateway: ${interfaces_network_gateway}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     DNS name servers: ${interfaces_network_dns_nameservers}"
+
+    sudo sed -i -- "s/^auto lo/auto eth0/g" /etc/network/interfaces
+    sudo sed -i -- "s/^iface eth0 inet manual/iface eth0 inet static\n   address $interfaces_network_ip\n   netmask $interfaces_network_netmask\n   gateway $interfaces_network_gateway\n   dns-nameservers $interfaces_network_dns_nameservers/g" /etc/network/interfaces
+fi
+
+if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_netmask} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
+    mkdir -p $backup/etc
+    sudo cp /etc/dhcpcd.conf $backup/etc/
+    echo "$(date +%Y-%m-%d:%H:%M:%S) Configure static IP"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     IP: ${dhcpcd_network_ip}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     Net mask: ${dhcpcd_network_netmask}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     Gateway: ${dhcpcd_network_gateway}"
+    echo "$(date +%Y-%m-%d:%H:%M:%S)     DNS name servers: ${dhcpcd_network_dns_nameservers}"
 
     echo "interface eth0" | sudo tee -a /etc/dhcpcd.conf
-    echo "static ip_address=${network_ip}" | sudo tee -a /etc/dhcpcd.conf
-    echo "static routers=${network_ip}" | sudo tee -a /etc/dhcpcd.conf
-    echo "static ip_address=${network_gateway}" | sudo tee -a /etc/dhcpcd.conf
-    echo "static domain_name_servers=${network_dns_nameservers}" | sudo tee -a /etc/dhcpcd.conf
-    #sudo sed -i -- "s/^auto lo/auto eth0/g" /etc/network/interfaces
-    #sudo sed -i -- "s/^iface eth0 inet manual/iface eth0 inet static\n   address $network_ip\n   netmask $network_netmask\n   gateway $network_gateway\n   dns-nameservers $network_dns_nameservers/g" /etc/network/interfaces
+    echo "static ip_address=${dhcpcd_network_ip}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static routers=${dhcpcd_network_ip}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static ip_address=${dhcpcd_network_gateway}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static domain_name_servers=${dhcpcd_network_dns_nameservers}" | sed -e 's/,/ /g' | sudo tee -a /etc/dhcpcd.conf
 fi
 
 ######################
