@@ -116,11 +116,17 @@ if [ ! -z ${network_ip} ] && [ ! -z ${network_netmask} ] && [ ! -z ${network_gat
     sudo cp /etc/network/interfaces $backup/etc/network
     echo "$(date +%Y-%m-%d:%H:%M:%S) Configure static IP"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     IP: ${network_ip}"
-    echo "$(date +%Y-%m-%d:%H:%M:%S)     Net mask: ${network_netmask}"
+    #echo "$(date +%Y-%m-%d:%H:%M:%S)     Net mask: ${network_netmask}"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     Gateway: ${network_gateway}"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     DNS name servers: ${network_dns_nameservers}"
-    sudo sed -i -- "s/^auto lo/auto eth0/g" /etc/network/interfaces
-    sudo sed -i -- "s/^iface eth0 inet manual/iface eth0 inet static\n   address $network_ip\n   netmask $network_netmask\n   gateway $network_gateway\n   dns-nameservers $network_dns_nameservers/g" /etc/network/interfaces
+
+    echo "interface eth0" | sudo tee -a /etc/dhcpcd.conf
+    echo "static ip_address=${network_ip}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static routers=${network_ip}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static ip_address=${network_gateway}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static domain_name_servers=${network_dns_nameservers}" | sudo tee -a /etc/dhcpcd.conf
+    #sudo sed -i -- "s/^auto lo/auto eth0/g" /etc/network/interfaces
+    #sudo sed -i -- "s/^iface eth0 inet manual/iface eth0 inet static\n   address $network_ip\n   netmask $network_netmask\n   gateway $network_gateway\n   dns-nameservers $network_dns_nameservers/g" /etc/network/interfaces
 fi
 
 ######################
