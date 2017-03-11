@@ -42,7 +42,6 @@ fi
 if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
     echo "     Configure static IP address changing /etc/dhcpcd.conf:"
     echo "         IP: ${dhcpcd_network_ip}"
-    echo "         Net mask: ${dhcpcd_network_netmask}"
     echo "         Gateway: ${dhcpcd_network_gateway}"
     echo "         DNS name servers: ${dhcpcd_network_dns_nameservers}"
     echo ""
@@ -139,7 +138,6 @@ if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z
     sudo cp /etc/dhcpcd.conf $backup/etc/
     echo "$(date +%Y-%m-%d:%H:%M:%S) Configure static IP"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     IP: ${dhcpcd_network_ip}"
-    echo "$(date +%Y-%m-%d:%H:%M:%S)     Net mask: ${dhcpcd_network_netmask}"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     Gateway: ${dhcpcd_network_gateway}"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     DNS name servers: ${dhcpcd_network_dns_nameservers}"
 
