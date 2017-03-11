@@ -39,8 +39,8 @@ if [ ! -z ${interfaces_network_ip} ] && [ ! -z ${interfaces_network_netmask} ] &
     echo "     Next time you want to connect to your Raspberry use following IP: ${interfaces_network_ip}"
     echo ""
 fi
-if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_netmask} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
-    echo "     Configure static IP address changing /etc/network/interfaces:"
+if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
+    echo "     Configure static IP address changing /etc/dhcpcd.conf:"
     echo "         IP: ${dhcpcd_network_ip}"
     echo "         Net mask: ${dhcpcd_network_netmask}"
     echo "         Gateway: ${dhcpcd_network_gateway}"
@@ -134,7 +134,7 @@ if [ ! -z ${interfaces_network_ip} ] && [ ! -z ${interfaces_network_netmask} ] &
     sudo sed -i -- "s/^iface eth0 inet manual/iface eth0 inet static\n   address $interfaces_network_ip\n   netmask $interfaces_network_netmask\n   gateway $interfaces_network_gateway\n   dns-nameservers $interfaces_network_dns_nameservers/g" /etc/network/interfaces
 fi
 
-if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_netmask} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
+if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
     mkdir -p $backup/etc
     sudo cp /etc/dhcpcd.conf $backup/etc/
     echo "$(date +%Y-%m-%d:%H:%M:%S) Configure static IP"
@@ -143,10 +143,10 @@ if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_netmask} ] && [ ! -z
     echo "$(date +%Y-%m-%d:%H:%M:%S)     Gateway: ${dhcpcd_network_gateway}"
     echo "$(date +%Y-%m-%d:%H:%M:%S)     DNS name servers: ${dhcpcd_network_dns_nameservers}"
 
+    echo "" | sudo tee -a /etc/dhcpcd.conf
     echo "interface eth0" | sudo tee -a /etc/dhcpcd.conf
     echo "static ip_address=${dhcpcd_network_ip}" | sudo tee -a /etc/dhcpcd.conf
-    echo "static routers=${dhcpcd_network_ip}" | sudo tee -a /etc/dhcpcd.conf
-    echo "static ip_address=${dhcpcd_network_gateway}" | sudo tee -a /etc/dhcpcd.conf
+    echo "static routers=${dhcpcd_network_gateway}" | sudo tee -a /etc/dhcpcd.conf
     echo "static domain_name_servers=${dhcpcd_network_dns_nameservers}" | sed -e 's/,/ /g' | sudo tee -a /etc/dhcpcd.conf
 fi
 
