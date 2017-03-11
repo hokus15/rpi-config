@@ -133,7 +133,7 @@ if [ ! -z ${interfaces_network_ip} ] && [ ! -z ${interfaces_network_netmask} ] &
     sudo sed -i -- "s/^iface eth0 inet manual/iface eth0 inet static\n   address $interfaces_network_ip\n   netmask $interfaces_network_netmask\n   gateway $interfaces_network_gateway\n   dns-nameservers $interfaces_network_dns_nameservers/g" /etc/network/interfaces
 fi
 
-if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_gateway} ] && [ ! -z ${dhcpcd_network_dns_nameservers} ]; then
+if [ ! -z ${dhcpcd_network_ip} ] && [ ! -z ${dhcpcd_network_gateway} ] && [[ ! -z ${dhcpcd_network_dns_nameservers} ]]; then
     mkdir -p $backup/etc
     sudo cp /etc/dhcpcd.conf $backup/etc/
     echo "$(date +%Y-%m-%d:%H:%M:%S) Configure static IP"
@@ -161,9 +161,9 @@ if [ ! -z ${network_disable_ipv6} ] && [ $network_disable_ipv6 = "yes" ]; then
     else
         sudo sed -i -- "s/^net.ipv6.conf.all.disable_ipv6.*/net.ipv6.conf.all.disable_ipv6 = 1/g" /etc/sysctl.conf
     fi
-    sudo sysctl -p
-    sudo ifconfig eth0 down && sudo ifconfig eth0 up
-    sleep 10
+    #sudo sysctl -p
+    #sudo ifconfig eth0 down && sudo ifconfig eth0 up
+    #sleep 10
 fi
 
 ######################
