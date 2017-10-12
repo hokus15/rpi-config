@@ -112,8 +112,7 @@ fi
 ######################
 if [ ! -z ${timezone} ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Set TimeZone to ${timezone}"
-    sudo cp /etc/timezone $backup/etc
-    sudo bash -c "echo $timezone > /etc/timezone"
+    sudo timedatectl set-timezone $timezone
     sudo dpkg-reconfigure -f noninteractive tzdata 2>&1
 fi
 
@@ -173,7 +172,8 @@ if [ ! -z ${wifi_country} ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Set WiFi country to ${wifi_country}"
     mkdir -p $backup/etc/wpa_supplicant
     sudo cp /etc/wpa_supplicant/wpa_supplicant.conf $backup/etc/wpa_supplicant
-    sudo sed -i "s/^country=.*/country=$wifi_country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+    sudo raspi-config nonint do_wifi_country $wifi_country
+    #sudo sed -i "s/^country=.*/country=$wifi_country/g" /etc/wpa_supplicant/wpa_supplicant.conf
 fi
 
 ######################

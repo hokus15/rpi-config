@@ -1,5 +1,5 @@
 # rpi-config
-Script to automate configurations usually done in a fresh Rasbian Jessie installation.
+Script to automate configurations usually done in a fresh Rasbian Stretch installation.
 
 Note that all modified files will be copied to a backup folder `(default: /home/pi/backup)`
 
@@ -15,10 +15,10 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 
 ## Requirements
 - Raspberry Pi 3 Model B
-- Fresh Rasbian Jessie intallation running
+- Fresh Rasbian Stretch intallation running
 
 ### Follow next steps to install a fresh Rasbian onto Raspberry Pi
-1. Download Rasbian Jessie from [here] (https://www.raspberrypi.org/downloads/raspbian/)
+1. Download Rasbian Stretch from [here] (https://www.raspberrypi.org/downloads/raspbian/)
 2. Extract zip file containing disk image
 3. Download and install [Win32DiskImager] (https://sourceforge.net/projects/win32diskimager/)
 4. Copy image file to SD card using Win32DiskImager
