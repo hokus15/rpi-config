@@ -1,5 +1,5 @@
 # rpi-config
-Script to automate configurations usually done in a fresh Rasbian Stretch installation.
+Script to automate configurations usually done in a fresh Raspbian (Lite) Jessie / Stretch installation.
 
 Note that all modified files will be copied to a backup folder `(default: /home/pi/backup)`
 
@@ -15,12 +15,12 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 
 ## Requirements
 - Raspberry Pi 3 Model B
-- Fresh Rasbian Stretch intallation running
+- Fresh Raspbian (Lite) Jessie / Stretch intallation running
 
-### Follow next steps to install a fresh Rasbian onto Raspberry Pi
-1. Download Rasbian Stretch from [here] (https://www.raspberrypi.org/downloads/raspbian/)
+### Follow next steps to install a fresh Raspbian (Lite) onto Raspberry Pi
+1. Download Raspbian (Lite) Jessie / Stretch from the following links: (https://www.raspberrypi.org/downloads/raspbian/) (http://downloads.raspberrypi.org/raspbian/images/) (http://downloads.raspberrypi.org/raspbian_lite/images/)
 2. Extract zip file containing disk image
-3. Download and install [Win32DiskImager] (https://sourceforge.net/projects/win32diskimager/)
+3. Download and install [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/)
 4. Copy image file to SD card using Win32DiskImager
 5. **IMPORTANT!!! Since Nov 2016 SSH is disabled by default; it can be enabled by creating a file with name "ssh" in boot partition**
 6. Plug SD card into Pi, power up 
@@ -29,8 +29,8 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 You need to adapt the `rpi-config.conf` file to your needs and run the script.
 
 ### Follow next steps to execute the script
-1. Use an app like [FING] (https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=en) to find your Pi's IP address 
-2. Using [Putty] (http://www.putty.org) connect to Pi via SSH, use user: `pi` password: `raspberry`
+1. Use an app like [FING](https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=en) to find your Pi's IP address 
+2. Using [Putty](http://www.putty.org) connect to Pi via SSH, use user: `pi` password: `raspberry`
 3. Execute `wget -Nnv https://raw.githubusercontent.com/hokus15/rpi-config/master/rpi-config.conf`
 4. Execute `nano rpi-config.conf`
 5. Make modifications to adapt configuration to your needs

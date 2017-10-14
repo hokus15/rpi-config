@@ -54,6 +54,9 @@ fi
 if [ ! -z ${password_change} ] && [ $password_change = "yes" ]; then
     echo "     ${whoami} password will be changed"
 fi
+if [ ! -z ${update_os} ] && [ $update_os = "yes" ]; then
+    echo "     OS will be updated"
+fi
 if [ ! -z ${expand_filesystem} ] && [ $expand_filesystem = "yes" ]; then
     echo "     File system will be expanded"
 fi
@@ -191,6 +194,15 @@ fi
 if [ ! -z ${expand_filesystem} ] && [ $expand_filesystem = "yes" ]; then
     echo "$(date +%Y-%m-%d:%H:%M:%S) Expand filesystem"
     sudo raspi-config --expand-rootfs
+fi
+
+######################
+# Update OS
+######################
+if [ ! -z ${update_os} ]; then
+    echo "$(date +%Y-%m-%d:%H:%M:%S) Update OS"
+    sudo apt-get update
+    sudo apt-get dist-upgrade -y
 fi
 
 ######################
