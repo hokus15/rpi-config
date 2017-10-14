@@ -12,6 +12,7 @@ Note that all modified files will be copied to a backup folder `(default: /home/
 - Set WiFi country
 - Configure static IP address
 - Disable IPv6
+- Update OS
 
 ## Requirements
 - Raspberry Pi 3 Model B
